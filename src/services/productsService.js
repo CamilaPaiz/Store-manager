@@ -8,9 +8,10 @@ const getAll = async () => {
 
 // se tiver sucesso 200/retorna produto,caso nao tenha 404/"Product not found" 
 const findById = async (id) => {
-  const products = await productsModel.findById(id);
-  if (products) return { type: null, products };
-  return { type: 404, message: 'Product not found' };
+  const product = await productsModel.findById(id);
+
+  if (product === undefined) return { type: 404, message: 'Product not found' };
+  return { type: null, product };
 };
 
 module.exports = {

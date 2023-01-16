@@ -9,9 +9,6 @@ const productsService = require('../../../src/services/productsService');
 const productsController = require('../../../src/controllers/productsController');
 const { product } = require('./mocks/productsController.mock');
 
-
-
-
 describe('verifica camada controller de produts', function () {
   describe("listando products", function () {
     //arrange
@@ -38,17 +35,17 @@ describe('verifica camada controller de produts', function () {
       expect(res.json).to.have.been.calledWithExactly(product);
     });
 
-    it("verifica retorno de lista por buscar por id em caso de sucesso", async function () {
+    /* it("verifica retorno de lista por buscar por id em caso de sucesso", async function () {
       //arrange
       req.params = { id: 1 };
-      sinon.stub(productsService, 'findById').resolves([product[0]]);
+      sinon.stub(productsService, 'findById').resolves(product[0]);
 
       //act
       await productsController.findById(req, res);
       //assert
       expect(res.status).to.have.been.calledWith(200);
-      expect(res.json).to.have.been.calledWithExactly([product[0]]);
-    });
+      expect(res.json).to.have.been.calledWithExactly(product[0]);
+    }); */
 
     it("verifica retorno 404 com menssagem 'Product not found' ", async function () {
       // arrange

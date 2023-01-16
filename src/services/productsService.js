@@ -13,8 +13,15 @@ const findById = async (id) => {
   if (product === undefined) return { type: 404, message: 'Product not found' };
   return { type: null, product };
 };
-
+// caso de sucesso 201 com o produto 
+const insertProduct = async ({ name }) => {
+  const newProduct = await productsModel.insertProduct({ name }); // cadastra
+  const id = newProduct.insertId;
+ 
+   return { id, name }; 
+};
 module.exports = {
   getAll,
   findById,
+  insertProduct,
 };

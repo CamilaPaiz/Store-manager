@@ -7,7 +7,7 @@ chai.use(sinonChai);
 
 const productsService = require('../../../src/services/productsService');
 const productsController = require('../../../src/controllers/productsController');
-const { product } = require('./mocks/productsController.mock');
+const { product, newProduct } = require('./mocks/productsController.mock');
 
 describe('verifica camada controller de produts', function () {
   describe("listando products", function () {
@@ -25,7 +25,7 @@ describe('verifica camada controller de produts', function () {
 
     it("verifica retorno status 200 e lista em caso de sucesso", async function () {
       //arrange
-      sinon.stub(productsService, 'getAll').resolves(product);
+      sinon.stub(productsService, "getAll").resolves(product);
 
       // act
       await productsController.getAll(req, res);
@@ -35,30 +35,72 @@ describe('verifica camada controller de produts', function () {
       expect(res.json).to.have.been.calledWithExactly(product);
     });
 
-    /* it("verifica retorno de lista por buscar por id em caso de sucesso", async function () {
+    /*  it("verifica retorno de lista por buscar por id em caso de sucesso", async function () {
       //arrange
-      req.params = { id: 1 };
-      sinon.stub(productsService, 'findById').resolves(product[0]);
-
+       
+     const req = {
+        params: { id: 1 },
+      };
+      sinon.stub(productsService, 'findById').resolves({ type:null, product })
       //act
       await productsController.findById(req, res);
       //assert
-      expect(res.status).to.have.been.calledWith(200);
-      expect(res.json).to.have.been.calledWithExactly(product[0]);
-    }); */
+      expect(res.status).to.have.been.calledWith(null);
+      expect(res.json).to.have.been.calledWithExactly(product);
+    });  */
 
     it("verifica retorno 404 com menssagem 'Product not found' ", async function () {
       // arrange
       req.params = { id: 5 };
-     
+
       sinon
-        .stub(productsService, 'findById')
-        .resolves({ type: 404, message: 'Product not found'});
+        .stub(productsService, "findById")
+        .resolves({ type: 404, message: "Product not found" });
       //act
       await productsController.findById(req, res);
       //assert
       expect(res.status).to.have.been.calledOnceWith(404);
-      expect(res.json).to.have.been.calledWithExactly({ message: 'Product not found' });
+      expect(res.json).to.have.been.calledWithExactly({
+        message: "Product not found",
+      });
     });
+    it("verifica cadastro de novo produto com sucesso", async function () {
+      //arrange
+      req.body = { name: "Escudo Capitão América" };
+      sinon.stub(productsService, "insertProduct").resolves(newProduct);
+      //act
+      await productsController.insertProduct(req, res);
+      //assert
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWithExactly(newProduct);
+    });
+    it("retorna erro ao enviar nome com menos de 5 caracteres", async function () {
+      //arrange -->função nao funciona como esperado!!!!
+      req.body = { name: "De" };
+      sinon.stub(productsService, "insertProduct").resolves({
+        type: 422,
+        message: '"name" length must be at least 5 characters long',
+      });
+      //act
+      await productsController.insertProduct(req, res);
+      //assert
+      expect(res.status).to.have.been.calledWith(422);
+      expect(res.json).to.have.been.calledWithExactly({
+        message: '"name" length must be at least 5 characters long',
+      });
+    });
+    /*  it("retorna erro ao enviar campo nome vazio", async function () {
+      //arrange
+      req.body = { name: "" };
+      sinon.stub(productsService, "insertProduct").resolves({
+        type: 400,
+        message: '"name" is required',
+      });
+      //act
+      await productsController.insertProduct(req, res);
+      //assert
+      expect(res.status).to.have.been.calledWith(400);
+
+    });  */
   });
 });   

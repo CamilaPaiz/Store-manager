@@ -6,10 +6,18 @@ const product = [
 
 ];
 
+const newProduct = {
+  "id": 5,
+  "name":"Escudo Capitão América"
+}
 
+const invalidNewProduct = {
+  "id": 5,
+  "name":"De"
+}
 
 module.exports = {
   product,
- 
-
+  newProduct,
+  invalidNewProduct,
 };

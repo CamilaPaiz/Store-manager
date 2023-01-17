@@ -15,14 +15,23 @@ const findById = async (req, res) => {
 
 const insertProduct = async (req, res) => {
   const { name } = req.body;
-  const { type, message } = await productsService.insertProduct(name);
-   const newProduct = await productsService.insertProduct(name); 
-  if (type) return res.status(422).json({ message });
-  res.status(201).json(newProduct);
+  const product = await productsService.insertProduct(name);
+  
+  if (product.type) {
+    return res.status(422).json({ message: product.message });
+  }
+  res.status(201).json(product);
 };
 
+/* const insertSales = async (req, res) => {
+  const registerSale = req.body; // obj com os itens
+  const sales = await productsService.insertSales(registerSale); // lista das vendas
+  return res.status(201).json(sales);
+}; */
+ 
 module.exports = {
   getAll,
   findById,
   insertProduct,
+  /* insertSales, */
 };

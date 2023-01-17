@@ -18,5 +18,6 @@ app.get('/', (_request, response) => {
 app.get('/products', productsController.getAll);
 app.get('/products/:id', productsController.findById);
 app.post('/products', validate.validateName, productsController.insertProduct);
+/* app.post('/sales', productsController.insertSales); */
 
 module.exports = app;

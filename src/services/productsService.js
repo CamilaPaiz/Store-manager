@@ -1,5 +1,5 @@
 const productsModel = require('../models/productsModel');
-const schema = require('./validations/validationsInputsValues');
+const { validateInputValues } = require('./validations/validationsInputsValues');
 
 // sem regras de negócio para esta função
 const getAll = async () => {
@@ -16,19 +16,28 @@ const findById = async (id) => {
 };
 
 // caso de sucesso 201 com o produto 
-const insertProduct = async ({ name }) => {
-  const error = schema.validateInputValues(name);
-  if (error) {
+const insertProduct = async (name) => {
+  const error = validateInputValues(name);
+ 
+  if (error.type) {
     return error;
   }
- 
-   const newProduct = await productsModel.insertProduct({ name }); // cadastra
+  const newProduct = await productsModel.insertProduct(name); // cadastra
+  /* console.log(newProduct); */
    const id = newProduct.insertId;
-   return { id, name }; 
+   return { id, name };
 };
+
+/* const insertSales = async ({ newSale }) => {
+  const registerSale = await productsModel.insertSales({ newSale });
+  await Promise.all(registerSale);
+  const sales = await getAll();
+  return sales;
+}; */
 
 module.exports = {
   getAll,
   findById,
   insertProduct,
+ /*  insertSales, */
 };

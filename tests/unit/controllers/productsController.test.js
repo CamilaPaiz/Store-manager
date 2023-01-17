@@ -35,19 +35,19 @@ describe('verifica camada controller de produts', function () {
       expect(res.json).to.have.been.calledWithExactly(product);
     });
 
-    /*  it("verifica retorno de lista por buscar por id em caso de sucesso", async function () {
+      it("verifica retorno de lista por buscar por id em caso de sucesso", async function () {
       //arrange
        
      const req = {
         params: { id: 1 },
       };
-      sinon.stub(productsService, 'findById').resolves({ type:null, product })
+      sinon.stub(productsService, 'findById').resolves({ type:null, product })//mockar retorno service
       //act
       await productsController.findById(req, res);
       //assert
-      expect(res.status).to.have.been.calledWith(null);
+       expect(res.status).to.have.been.calledWith(200); //mockar retorno controller
       expect(res.json).to.have.been.calledWithExactly(product);
-    });  */
+    });  
 
     it("verifica retorno 404 com menssagem 'Product not found' ", async function () {
       // arrange
@@ -75,8 +75,8 @@ describe('verifica camada controller de produts', function () {
       expect(res.json).to.have.been.calledWithExactly(newProduct);
     });
     it("retorna erro ao enviar nome com menos de 5 caracteres", async function () {
-      //arrange -->função nao funciona como esperado!!!!
-      req.body = { name: "De" };
+      //arrange -----reavaliar teste
+      req.body = { name: "Dee" };
       sinon.stub(productsService, "insertProduct").resolves({
         type: 422,
         message: '"name" length must be at least 5 characters long',
@@ -89,18 +89,5 @@ describe('verifica camada controller de produts', function () {
         message: '"name" length must be at least 5 characters long',
       });
     });
-    /*  it("retorna erro ao enviar campo nome vazio", async function () {
-      //arrange
-      req.body = { name: "" };
-      sinon.stub(productsService, "insertProduct").resolves({
-        type: 400,
-        message: '"name" is required',
-      });
-      //act
-      await productsController.insertProduct(req, res);
-      //assert
-      expect(res.status).to.have.been.calledWith(400);
-
-    });  */
   });
 });   

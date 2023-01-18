@@ -19,36 +19,32 @@ const insertProduct = async (name) => {
     'INSERT INTO StoreManager.products (name) VALUE (?)',
     [name],
   );
- /*  console.log(newProduct); */ // retorno insertId
+   console.log(newProduct); // retorno insertId assim como service
   return newProduct;
 };
 
- /* const insertSales = async (newSale) => { // teria que colocar [{insertId}]?
+// sale_id vem da tabela sales e productId de sale_products
+
+/* const insertSales = async (newSale) => { 
+  // inserindo a venda na tabela sale para recuperar o id 
+  const [insertSale] = await connection
+    .execute('INSERT INTO StoreManager.sales () VALUES ()');
+  // inserir no sales_products
   const registerSale = newSale.map(async (item) => { // map do array contendo as vendas(newSale) p add +1
-    const [sales] = await connection.execute( // query pra inserir em sales e sales_proucts?
-      'INSERT INTO StoreManager.sales_products (product_id, quantity) VALUES(?,?)', // id é auto increment?
-      [item.productId, item.quantity],
+    const [sales] = await connection.execute(
+      'INSERT INTO StoreManager.sales_products (sale_id,product_id,quantity) VALUES(?,?,?)',
+      [insertSale.insertId, item.productId, item.quantity], // id da venda vem da query a inserir venda e do produto ao inserir o produto na lista
     );
-    console.log(registerSale);
+    // console.log(registerSale);  // retorna 2 promises
     
-    return sales; // item unico
+    return sales; // item inserido
   });
-  return registerSale; // itens do array
+  return registerSale; // itens do array inserido
 }; 
-insertSales([
-  {
-    productId: 1,
-    quantity: 1,
-  },
-  {
-    productId: 2,
-    quantity: 5,
-  },
-]);
  */
 module.exports = {
   getAll,
   findById,
   insertProduct,
- /*  insertSales, */
+ /*  insertSales,  */
 };

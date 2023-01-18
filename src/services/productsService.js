@@ -10,7 +10,6 @@ const getAll = async () => {
 // se tiver sucesso 200/retorna produto,caso nao tenha 404/"Product not found" 
 const findById = async (id) => {
   const product = await productsModel.findById(id);
-  console.log(product);
   if (product === undefined) return { type: 404, message: 'Product not found' };
   return { type: null, product };
 };
@@ -23,21 +22,31 @@ const insertProduct = async (name) => {
     return error;
   }
   const newProduct = await productsModel.insertProduct(name); // cadastra
-  /* console.log(newProduct); */
+   /* console.log(newProduct); */ // retorna dados com chave insertId
    const id = newProduct.insertId;
    return { id, name };
 };
 
-/* const insertSales = async ({ newSale }) => {
-  const registerSale = await productsModel.insertSales({ newSale });
-  await Promise.all(registerSale);
+  /* const insertSales = async (newSale) => { // lista ser inserida
+  const registerSale = await productsModel.insertSales(newSale);
+  await Promise.all(registerSale); // retorno da api
   const sales = await getAll();
+    console.log(sales);
   return sales;
-}; */
-
+}; 
+ insertSales([
+   {
+     productId: 1,
+     quantity: 1,
+   },
+   {
+     productId: 2,
+     quantity: 5,
+   },
+ ]); */
 module.exports = {
   getAll,
   findById,
   insertProduct,
- /*  insertSales, */
+ /*  insertSales,   */
 };

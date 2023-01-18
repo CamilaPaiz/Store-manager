@@ -39,14 +39,12 @@ describe('Verificando service para products', function () {
     const result = await findById(1);
     //assert
     expect(result.type).to.equal(null);
-    
   });
-
     it('verifica se é possível cadastrar novo produto', async function () {
     //arrange
 
     //act 
-    const result = await insertProduct({name:'Escudo Capitão América'})
+    const result = await insertProduct('Escudo Capitão América')
     //assert
      expect(result).to.deep.equal(newProduct); 
   })   

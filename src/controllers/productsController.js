@@ -23,9 +23,10 @@ const insertProduct = async (req, res) => {
   res.status(201).json(product);
 };
 
-/* const insertSales = async (req, res) => {
-  const registerSale = req.body; // obj com os itens
-  const sales = await productsService.insertSales(registerSale); // lista das vendas
+ /* const insertSales = async (req, res) => {
+  const registerSale = req.body; // obj com os itens a serem inseridos
+   const sales = await productsService.insertSales(registerSale); // lista das vendas inseridas
+   console.log(sales);
   return res.status(201).json(sales);
 }; */
  
@@ -33,5 +34,5 @@ module.exports = {
   getAll,
   findById,
   insertProduct,
-  /* insertSales, */
+  /* insertSales,  */
 };

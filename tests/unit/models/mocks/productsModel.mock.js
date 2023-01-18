@@ -23,6 +23,5 @@ const name = {
 module.exports = {
   products,
   newProduct,
-  name,
-  
+  name, 
 }

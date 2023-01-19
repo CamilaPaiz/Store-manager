@@ -27,26 +27,9 @@ const insertProduct = async (name) => {
    return { id, name };
 };
 
-  /* const insertSales = async (newSale) => { // lista ser inserida
-  const registerSale = await productsModel.insertSales(newSale);
-  await Promise.all(registerSale); // retorno da api
-  const sales = await getAll();
-    console.log(sales);
-  return sales;
-}; 
- insertSales([
-   {
-     productId: 1,
-     quantity: 1,
-   },
-   {
-     productId: 2,
-     quantity: 5,
-   },
- ]); */
 module.exports = {
   getAll,
   findById,
   insertProduct,
- /*  insertSales,   */
+ 
 };

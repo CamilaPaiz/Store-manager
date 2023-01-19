@@ -1,15 +1,22 @@
 const connection = require('./connection');
 
 const findById = async (id) => {
-  const [[result]] = await connection.execute(
-    'SELECT * FROM StoreManager.sales WHERE id = ?',
+  const [result] = await connection.execute(
+    `SELECT s.date,p.product_id,p.quantity
+ FROM sales AS s
+ INNER JOIN sales_products AS p
+ ON s.id = p.sale_id
+ WHERE id =?`,
     [id],
   );
+  console.log(result);
   return result;
 }; 
 
 const getAll = async () => {
-  const query = 'SELECT * FROM StoreManager.sales_products ORDER BY sale_id,product_id ;';
+  const query = `SELECT s.id AS sale_id, 
+   s.date, p.product_id,
+   p.quantity FROM sales AS s INNER JOIN sales_products AS p ON s.id = p.sale_id`;
   const [sales] = await connection.execute(query);
   return sales;
 };

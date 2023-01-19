@@ -1,15 +1,21 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 const { salesProductModel } = require("../../../src/models");
-const { getAll,insertSales} = require("../../../src/services/salesProductService");
-const { newSale } = require("./mocks/salesService.mock");
+const { getAll,insertSales,findById} = require("../../../src/services/salesProductService");
+const {
+  newSaleItem,
+  saleProducts,
+  newSaleItemHappy,
+  saleWihtoutProductId,
+  happyInsertsaleProduct,
+} = require("./mocks/salesService.mock");
 
 describe('Verificando service para sales Product ', function () {
   //arrange recuperando toda lista e inserindo um nome
   beforeEach(function () {
     sinon.stub(salesProductModel, 'getAll')
-       .resolves(newSale); //mockar o retorno
-    sinon.stub(salesProductModel, "insertSales").resolves({insertId:1}); 
+       .resolves(saleProducts); //mockar o retorno
+   
   });
   afterEach(function () {
     sinon.restore();
@@ -18,13 +24,23 @@ describe('Verificando service para sales Product ', function () {
     //act
     const result = await getAll();
     //assert
-    expect(result).to.deep.equal(newSale);
+    expect(result).to.deep.equal(saleProducts);
   });
-   /*  it("verifica se é possível cadastrar novo produto", async function () {
+     /*  it("verifica se é possível cadastrar novo produto", async function () {
     //arrange e importar mocks
+      sinon.stub(salesProductModel, "insertSales").resolves(happyInsertsaleProduct); 
     //act
-    const result = await insertSale(newSale); 
+    const result = await insertSales(newSaleItemHappy); 
     //assert
-    expect(result).to.deep.equal(newSale);
-  });      */
+    expect(result).to.deep.equal(newSaleItemHappy);
+     });    */
+   it("verifica cadastro de venda sem passar productId", async function () {
+    //arrange
+    sinon.stub(salesProductModel, "insertSales").resolves({inserId:''});
+    //act
+    const result = await insertSales(saleWihtoutProductId);
+    //assert
+    expect(result.type).to.equal(400);
+    expect(result.message).to.equal('"productId" is required');
+  }); 
 })

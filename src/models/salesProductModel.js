@@ -2,7 +2,7 @@ const connection = require('./connection');
 /* const salesModel = require('./salesModel'); */
 
 const getAll = async () => {
-  const query = 'SELECT * FROM StoreManager.sales_products ORDER BY id';
+  const query = 'SELECT * FROM StoreManager.sales_products ORDER BY sale_id,product_id ;';
   const [sales] = await connection.execute(query);
   return sales;
 };

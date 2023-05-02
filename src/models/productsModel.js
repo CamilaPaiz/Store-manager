@@ -19,32 +19,22 @@ const insertProduct = async (name) => {
     'INSERT INTO StoreManager.products (name) VALUE (?)',
     [name],
   );
-   console.log(newProduct); // retorno insertId assim como service
+   // console.log(newProduct); // retorno insertId assim como service
   return newProduct;
 };
 
-// sale_id vem da tabela sales e productId de sale_products
-
-/* const insertSales = async (newSale) => { 
-  // inserindo a venda na tabela sale para recuperar o id 
-  const [insertSale] = await connection
-    .execute('INSERT INTO StoreManager.sales () VALUES ()');
-  // inserir no sales_products
-  const registerSale = newSale.map(async (item) => { // map do array contendo as vendas(newSale) p add +1
-    const [sales] = await connection.execute(
-      'INSERT INTO StoreManager.sales_products (sale_id,product_id,quantity) VALUES(?,?,?)',
-      [insertSale.insertId, item.productId, item.quantity], // id da venda vem da query a inserir venda e do produto ao inserir o produto na lista
-    );
-    // console.log(registerSale);  // retorna 2 promises
-    
-    return sales; // item inserido
-  });
-  return registerSale; // itens do array inserido
-}; 
- */
+const updateProduct = async (name, id) => {
+  const [updateName] = await connection.execute(
+    'UPDATE StoreManager.products SET name = ? WHERE id = ?',
+    [name, id],
+  );
+ 
+  return updateName;
+};
 module.exports = {
   getAll,
   findById,
   insertProduct,
- /*  insertSales,  */
+  updateProduct,
+ 
 };

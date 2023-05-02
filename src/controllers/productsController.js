@@ -23,16 +23,18 @@ const insertProduct = async (req, res) => {
   res.status(201).json(product);
 };
 
- /* const insertSales = async (req, res) => {
-  const registerSale = req.body; // obj com os itens a serem inseridos
-   const sales = await productsService.insertSales(registerSale); // lista das vendas inseridas
-   console.log(sales);
-  return res.status(201).json(sales);
-}; */
+  const updateProduct = async (req, res) => {
+    const { name } = req.body; 
+    const { id } = req.params;
+   const updatedName = await productsService.updateProduct(name, id); 
+    if (updatedName.type) return res.status(404).json(updatedName);
+    
+  return res.status(200).json(updatedName);
+}; 
  
 module.exports = {
   getAll,
   findById,
   insertProduct,
-  /* insertSales,  */
+  updateProduct,  
 };
